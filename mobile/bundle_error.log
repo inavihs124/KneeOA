@@ -1,0 +1,16 @@
+                Welcome to Metro v0.80.12
+              Fast - Scalable - Integrated
+
+
+info Writing bundle output to: android/app/src/main/assets/index.android.bundle
+Error: ENOENT: no such file or directory, open 'D:\fyeshi\project\ortho\mobile\android\app\src\main\assets\index.android.bundle'
+info Run CLI with --verbose flag for more details.
+
+---STDERR---
+warn =================================================================================================
+warn From React Native 0.73, your project's Metro config should extend '@react-native/metro-config'
+warn or it will fail to build. Please copy the template at:
+warn https://github.com/facebook/react-native/blob/main/packages/react-native/template/metro.config.js
+warn This warning will be removed in future (https://github.com/facebook/metro/issues/1018).
+warn =================================================================================================
+error ENOENT: no such file or directory, open 'D:\fyeshi\project\ortho\mobile\android\app\src\main\assets\index.android.bundle'.
