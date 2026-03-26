@@ -1,0 +1,38 @@
+{
+    "expo": {
+        "name": "ArthroEase",
+        "slug": "arthroease",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/icon.png",
+        "userInterfaceStyle": "automatic",
+        "splash": {
+            "backgroundColor": "#0A1628"
+        },
+        "assetBundlePatterns": [
+            "**/*"
+        ],
+        "ios": {
+            "supportsTablet": true,
+            "bundleIdentifier": "com.arthroease.app",
+            "infoPlist": {
+                "NSBluetoothAlwaysUsageDescription": "ArthroEase needs Bluetooth to connect to your knee wearable device",
+                "NSBluetoothPeripheralUsageDescription": "ArthroEase needs Bluetooth to communicate with your therapy device"
+            }
+        },
+        "android": {
+            "adaptiveIcon": {
+                "backgroundColor": "#0A1628"
+            },
+            "package": "com.arthroease.app",
+            "permissions": [
+                "BLUETOOTH",
+                "BLUETOOTH_ADMIN",
+                "BLUETOOTH_CONNECT",
+                "BLUETOOTH_SCAN",
+                "ACCESS_FINE_LOCATION"
+            ]
+        },
+        "plugins": []
+    }
+}
