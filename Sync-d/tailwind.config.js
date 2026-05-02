@@ -6,7 +6,18 @@ export default {
   ],
   darkMode: 'class',
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        theme: {
+          base: 'var(--color-base)',
+          surface: 'var(--color-surface)',
+          'surface-hover': 'var(--color-surface-hover)',
+          accent: 'var(--color-accent)',
+          highlight: 'var(--color-highlight)',
+          muted: 'var(--color-muted)',
+        }
+      }
+    },
   },
   plugins: [],
 }

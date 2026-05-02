@@ -5,13 +5,49 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
+  :root, [data-theme="purple-haze"] {
+    --color-base: #1a0533;
+    --color-surface: rgba(255, 255, 255, 0.04);
+    --color-surface-hover: rgba(255, 255, 255, 0.08);
+    --color-accent: #BF5FFF;
+    --color-highlight: #00E5FF;
+    --color-muted: rgba(255, 255, 255, 0.2);
     color-scheme: dark;
   }
+
+  [data-theme="ocean-mode"] {
+    --color-base: #001a2e;
+    --color-surface: rgba(255, 255, 255, 0.04);
+    --color-surface-hover: rgba(255, 255, 255, 0.08);
+    --color-accent: #00E5FF;
+    --color-highlight: #3B82F6;
+    --color-muted: rgba(255, 255, 255, 0.2);
+  }
+
+  [data-theme="sunset-mode"] {
+    --color-base: #1a0a00;
+    --color-surface: rgba(255, 255, 255, 0.04);
+    --color-surface-hover: rgba(255, 255, 255, 0.08);
+    --color-accent: #FF6B35;
+    --color-highlight: #FBBF24;
+    --color-muted: rgba(255, 255, 255, 0.2);
+  }
+
+  [data-theme="matrix-mode"] {
+    --color-base: #001a0a;
+    --color-surface: rgba(255, 255, 255, 0.04);
+    --color-surface-hover: rgba(255, 255, 255, 0.08);
+    --color-accent: #00FF88;
+    --color-highlight: #84CC16;
+    --color-muted: rgba(255, 255, 255, 0.2);
+  }
+
   html, body, #root {
     height: 100%;
     margin: 0;
     padding: 0;
+    background-color: var(--color-base);
+    color: #FFFFFF;
   }
   body {
     font-family: 'Inter', system-ui, sans-serif;

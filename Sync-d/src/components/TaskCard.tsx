@@ -14,18 +14,18 @@ const priorityConfig: Record<
 > = {
   urgent: {
     label: 'Urgent',
-    classes: 'bg-red-500/15 text-red-400 border-red-500/30',
-    bar: 'bg-red-500',
+    classes: 'bg-theme-accent/15 text-theme-accent border-theme-accent/30',
+    bar: 'bg-theme-accent',
   },
   medium: {
     label: 'Medium',
-    classes: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
-    bar: 'bg-amber-500',
+    classes: 'bg-theme-highlight/15 text-theme-highlight border-theme-highlight/30',
+    bar: 'bg-theme-highlight',
   },
   low: {
     label: 'Low',
-    classes: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
-    bar: 'bg-emerald-500',
+    classes: 'bg-theme-surface-hover text-white/70 border-theme-muted',
+    bar: 'bg-theme-muted',
   },
 };
 
@@ -61,10 +61,10 @@ export const TaskCard: React.FC<TaskCardProps> = memo(({ task, onClick }) => {
       onClick={onClick}
       onKeyDown={e => e.key === 'Enter' && onClick()}
       className={[
-        'group relative bg-zinc-900 p-4 rounded-xl border transition-all duration-200 cursor-pointer select-none',
-        'hover:border-violet-500/60 hover:shadow-lg hover:shadow-violet-500/10',
-        'focus:outline-none focus:ring-2 focus:ring-violet-500/50',
-        isOverdue ? 'animate-pulse-shake border-red-500/50' : 'border-zinc-800',
+        'group relative bg-theme-surface p-4 rounded-xl border transition-all duration-200 cursor-pointer select-none',
+        'hover:border-theme-accent/60 hover:shadow-lg hover:shadow-theme-accent/10',
+        'focus:outline-none focus:ring-2 focus:ring-theme-accent/50',
+        isOverdue ? 'animate-pulse-shake border-theme-accent/50' : 'border-theme-muted',
         task.status === 'done' ? 'opacity-60' : '',
       ].join(' ')}
     >
@@ -80,14 +80,14 @@ export const TaskCard: React.FC<TaskCardProps> = memo(({ task, onClick }) => {
         >
           {priority.label}
         </span>
-        <span className="text-[10px] font-black text-violet-400 bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 rounded-full shrink-0">
+        <span className="text-[10px] font-black text-theme-highlight bg-theme-highlight/10 border border-theme-highlight/20 px-2 py-0.5 rounded-full shrink-0">
           +{task.xpValue} XP
         </span>
       </div>
 
       <h3
         className={`font-semibold text-sm mb-3 leading-snug line-clamp-2 ${
-          task.status === 'done' ? 'line-through text-zinc-500' : 'text-zinc-100'
+          task.status === 'done' ? 'line-through text-white/40' : 'text-white'
         }`}
       >
         {task.title}
@@ -97,16 +97,16 @@ export const TaskCard: React.FC<TaskCardProps> = memo(({ task, onClick }) => {
         <div className="flex items-center gap-3">
           {assignee && (
             <div className="flex items-center gap-1.5" title={`Assigned to ${assignee.name}`}>
-              <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-500 to-cyan-500 flex items-center justify-center text-[10px] font-bold text-white border border-zinc-700">
+              <div className="w-6 h-6 rounded-full bg-theme-accent flex items-center justify-center text-[10px] font-bold text-white border border-theme-muted">
                 {assignee.avatar}
               </div>
-              <span className="text-[10px] text-zinc-500">
+              <span className="text-[10px] text-white/50">
                 {assignee.name.split(' ')[0]}
               </span>
             </div>
           )}
           {taskComments.length > 0 && (
-            <span className="flex items-center gap-1 text-[10px] text-zinc-500">
+            <span className="flex items-center gap-1 text-[10px] text-white/50">
               <MessageSquare size={11} />
               {taskComments.length}
             </span>
@@ -115,7 +115,7 @@ export const TaskCard: React.FC<TaskCardProps> = memo(({ task, onClick }) => {
 
         <div className="flex items-center gap-2">
           {isOverdue && (
-            <span className="flex items-center gap-1 text-[10px] font-bold text-red-400 bg-red-500/10 px-1.5 py-0.5 rounded-md">
+            <span className="flex items-center gap-1 text-[10px] font-bold text-theme-accent bg-theme-accent/10 px-1.5 py-0.5 rounded-md">
               <Clock size={10} /> Overdue
             </span>
           )}
@@ -123,7 +123,7 @@ export const TaskCard: React.FC<TaskCardProps> = memo(({ task, onClick }) => {
             <button
               onClick={handleMove}
               aria-label={`${nextLabel} task: ${task.title}`}
-              className="flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-lg bg-violet-600/20 text-violet-400 hover:bg-violet-600/40 opacity-0 group-hover:opacity-100 transition-all focus:opacity-100 focus:outline-none focus:ring-1 focus:ring-violet-500"
+              className="flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-lg bg-theme-highlight/20 text-theme-highlight hover:bg-theme-highlight/40 opacity-0 group-hover:opacity-100 transition-all focus:opacity-100 focus:outline-none focus:ring-1 focus:ring-theme-highlight"
             >
               {nextLabel} <ArrowRight size={10} />
             </button>

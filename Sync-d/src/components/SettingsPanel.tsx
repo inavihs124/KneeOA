@@ -1,12 +1,12 @@
 import React from 'react';
-import { Settings, Sun, Moon, Pin, PinOff } from 'lucide-react';
+import { Settings, Pin, PinOff } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
 
-const ACCENT_COLORS = [
-  { id: 'purple', label: 'Purple', hex: '#8b5cf6' },
-  { id: 'blue', label: 'Blue', hex: '#3b82f6' },
-  { id: 'teal', label: 'Teal', hex: '#14b8a6' },
-  { id: 'coral', label: 'Coral', hex: '#f43f5e' },
+const THEMES = [
+  { id: 'purple-haze', label: 'Purple Haze', base: '#1a0533', accent: '#BF5FFF', highlight: '#00E5FF' },
+  { id: 'ocean-mode', label: 'Ocean Mode', base: '#001a2e', accent: '#00E5FF', highlight: '#3B82F6' },
+  { id: 'sunset-mode', label: 'Sunset Mode', base: '#1a0a00', accent: '#FF6B35', highlight: '#FBBF24' },
+  { id: 'matrix-mode', label: 'Matrix Mode', base: '#001a0a', accent: '#00FF88', highlight: '#84CC16' },
 ];
 
 const WIDGETS = [
@@ -17,60 +17,48 @@ const WIDGETS = [
 ];
 
 export const SettingsPanel: React.FC = () => {
-  const { theme, setTheme, accentColor, setAccentColor, layoutDensity, setLayoutDensity, pinnedWidgets, toggleWidgetPin } = useAppContext();
+  const { activeTheme, setActiveTheme, layoutDensity, setLayoutDensity, pinnedWidgets, toggleWidgetPin } = useAppContext();
 
   return (
     <div className="p-6 max-w-lg mx-auto">
       <div className="flex items-center gap-3 mb-6">
-        <Settings size={24} className="text-zinc-400" />
-        <h2 className="text-2xl font-black text-zinc-100">Settings</h2>
+        <Settings size={24} className="text-theme-muted" />
+        <h2 className="text-2xl font-black text-white">Settings</h2>
       </div>
 
       <div className="space-y-6">
         {/* Theme */}
-        <section className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
-          <h3 className="font-bold text-zinc-200 mb-4">Appearance</h3>
-
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <p className="text-sm font-medium text-zinc-200">Theme</p>
-              <p className="text-xs text-zinc-500">Switch between dark and light mode</p>
-            </div>
-            <button
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className={`relative w-12 h-6 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-violet-500 ${theme === 'dark' ? 'bg-violet-600' : 'bg-zinc-600'}`}
-              role="switch"
-              aria-checked={theme === 'dark'}
-              aria-label="Toggle dark mode"
-            >
-              <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform flex items-center justify-center text-[10px] ${theme === 'dark' ? 'translate-x-6' : 'translate-x-0.5'}`}>
-                {theme === 'dark' ? <Moon size={10} className="text-violet-600" /> : <Sun size={10} className="text-amber-500" />}
-              </span>
-            </button>
-          </div>
-
-          {/* Accent Color */}
-          <div>
-            <p className="text-sm font-medium text-zinc-200 mb-3">Accent Color</p>
-            <div className="flex gap-3" role="radiogroup" aria-label="Accent color">
-              {ACCENT_COLORS.map(color => (
+        <section className="bg-theme-surface border border-theme-muted/30 rounded-2xl p-5">
+          <h3 className="font-bold text-white mb-4">Appearance</h3>
+          <div className="grid grid-cols-2 gap-3">
+            {THEMES.map(theme => {
+              const isActive = activeTheme === theme.id;
+              return (
                 <button
-                  key={color.id}
-                  role="radio"
-                  aria-checked={accentColor === color.id}
-                  aria-label={color.label}
-                  onClick={() => setAccentColor(color.id)}
-                  className={`w-8 h-8 rounded-full ring-2 ring-offset-2 ring-offset-zinc-900 transition-all ${accentColor === color.id ? 'ring-white scale-110' : 'ring-transparent hover:scale-105'} focus:outline-none focus:ring-white`}
-                  style={{ backgroundColor: color.hex }}
-                />
-              ))}
-            </div>
+                  key={theme.id}
+                  onClick={() => setActiveTheme(theme.id)}
+                  className={`flex flex-col text-left p-3 rounded-xl border-2 transition-all overflow-hidden relative ${
+                    isActive ? 'border-theme-accent scale-[1.02]' : 'border-transparent hover:border-theme-muted'
+                  }`}
+                  style={{ backgroundColor: theme.base }}
+                >
+                  <span className="text-sm font-bold text-white mb-2 z-10">{theme.label}</span>
+                  <div className="flex gap-2 z-10">
+                    <div className="w-6 h-6 rounded-full shadow-lg border border-white/20" style={{ backgroundColor: theme.accent }}></div>
+                    <div className="w-6 h-6 rounded-full shadow-lg border border-white/20 -ml-4" style={{ backgroundColor: theme.highlight }}></div>
+                  </div>
+                  {isActive && (
+                    <div className="absolute inset-0 border-[3px] border-theme-accent rounded-xl pointer-events-none opacity-50" />
+                  )}
+                </button>
+              );
+            })}
           </div>
         </section>
 
         {/* Layout Density */}
-        <section className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
-          <h3 className="font-bold text-zinc-200 mb-4">Layout Density</h3>
+        <section className="bg-theme-surface border border-theme-muted/30 rounded-2xl p-5">
+          <h3 className="font-bold text-white mb-4">Layout Density</h3>
           <div className="flex gap-3" role="radiogroup" aria-label="Layout density">
             {(['compact', 'comfortable'] as const).map(d => (
               <button
@@ -78,8 +66,8 @@ export const SettingsPanel: React.FC = () => {
                 role="radio"
                 aria-checked={layoutDensity === d}
                 onClick={() => setLayoutDensity(d)}
-                className={`flex-1 py-2 rounded-xl text-sm font-bold capitalize transition-all focus:outline-none focus:ring-2 focus:ring-violet-500
-                  ${layoutDensity === d ? 'bg-violet-600 text-white' : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700'}`}
+                className={`flex-1 py-2 rounded-xl text-sm font-bold capitalize transition-all focus:outline-none focus:ring-2 focus:ring-theme-accent
+                  ${layoutDensity === d ? 'bg-theme-accent text-white' : 'bg-theme-surface hover:bg-theme-surface-hover text-white/70'}`}
               >
                 {d}
               </button>
@@ -88,18 +76,18 @@ export const SettingsPanel: React.FC = () => {
         </section>
 
         {/* Pinned Widgets */}
-        <section className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
-          <h3 className="font-bold text-zinc-200 mb-4">Dashboard Widgets</h3>
+        <section className="bg-theme-surface border border-theme-muted/30 rounded-2xl p-5">
+          <h3 className="font-bold text-white mb-4">Dashboard Widgets</h3>
           <div className="space-y-2">
             {WIDGETS.map(w => {
               const isPinned = pinnedWidgets.includes(w.id);
               return (
-                <div key={w.id} className="flex items-center justify-between p-3 bg-zinc-800/50 rounded-xl">
-                  <span className="text-sm text-zinc-300">{w.label}</span>
+                <div key={w.id} className="flex items-center justify-between p-3 bg-theme-surface rounded-xl">
+                  <span className="text-sm text-white/90">{w.label}</span>
                   <button
                     onClick={() => toggleWidgetPin(w.id)}
-                    className={`flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-violet-500
-                      ${isPinned ? 'bg-violet-500/20 text-violet-400 hover:bg-red-500/20 hover:text-red-400' : 'bg-zinc-700 text-zinc-500 hover:bg-violet-500/20 hover:text-violet-400'}`}
+                    className={`flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-theme-accent
+                      ${isPinned ? 'bg-theme-accent/20 text-theme-accent hover:bg-red-500/20 hover:text-red-400' : 'bg-theme-surface-hover text-white/60 hover:bg-theme-accent/20 hover:text-theme-accent'}`}
                     aria-label={isPinned ? `Unpin ${w.label}` : `Pin ${w.label}`}
                     aria-pressed={isPinned}
                   >

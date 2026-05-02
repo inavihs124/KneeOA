@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, ReactNode, useMemo, useCallback } from 'react';
+import React, { createContext, useContext, useState, useMemo, useCallback } from 'react';
+import type { ReactNode } from 'react';
 import type { User, Task, Comment, Notification, TaskStatus, VibeStatus } from '../data/mockData';
 import { users as initialUsers, initialTasks, initialComments, initialNotifications } from '../data/mockData';
 
@@ -8,15 +9,13 @@ interface AppState {
   tasks: Task[];
   comments: Comment[];
   notifications: Notification[];
-  theme: 'dark' | 'light';
-  accentColor: string;
+  activeTheme: string;
   layoutDensity: 'compact' | 'comfortable';
   pinnedWidgets: string[];
 }
 
 interface AppContextType extends AppState {
-  setTheme: (theme: 'dark' | 'light') => void;
-  setAccentColor: (color: string) => void;
+  setActiveTheme: (theme: string) => void;
   setLayoutDensity: (density: 'compact' | 'comfortable') => void;
   toggleWidgetPin: (widgetId: string) => void;
   moveTask: (taskId: string, newStatus: TaskStatus) => void;
@@ -35,8 +34,15 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [comments, setComments] = useState<Comment[]>(initialComments);
   const [notifications, setNotifications] = useState<Notification[]>(initialNotifications);
   
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
-  const [accentColor, setAccentColor] = useState<string>('purple');
+  const [activeTheme, setActiveTheme] = useState<string>(() => {
+    return localStorage.getItem('sync-d-theme') || 'purple-haze';
+  });
+  
+  React.useEffect(() => {
+    document.documentElement.setAttribute('data-theme', activeTheme);
+    localStorage.setItem('sync-d-theme', activeTheme);
+  }, [activeTheme]);
+
   const [layoutDensity, setLayoutDensity] = useState<'compact' | 'comfortable'>('comfortable');
   const [pinnedWidgets, setPinnedWidgets] = useState<string[]>(['standup', 'pulse']);
 
@@ -93,13 +99,13 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
   const value = useMemo(() => ({
     currentUser, users, tasks, comments, notifications,
-    theme, accentColor, layoutDensity, pinnedWidgets,
-    setTheme, setAccentColor, setLayoutDensity, toggleWidgetPin,
+    activeTheme, layoutDensity, pinnedWidgets,
+    setActiveTheme, setLayoutDensity, toggleWidgetPin,
     moveTask, addComment, updateUserVibe, markNotificationRead, triggerWin
   }), [
     currentUser, users, tasks, comments, notifications,
-    theme, accentColor, layoutDensity, pinnedWidgets,
-    setTheme, setAccentColor, setLayoutDensity, toggleWidgetPin,
+    activeTheme, layoutDensity, pinnedWidgets,
+    setActiveTheme, setLayoutDensity, toggleWidgetPin,
     moveTask, addComment, updateUserVibe, markNotificationRead, triggerWin
   ]);
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { TaskBoard } from './components/TaskBoard';
@@ -6,7 +6,7 @@ import { WinsFeed } from './components/WinsFeed';
 import { AIStandup } from './components/AIStandup';
 import { NotificationsPanel } from './components/NotificationsPanel';
 import { SettingsPanel } from './components/SettingsPanel';
-import { AppProvider, useAppContext } from './context/AppContext';
+import { AppProvider } from './context/AppContext';
 
 const PAGE_TITLES: Record<string, string> = {
   dashboard: 'Gamified Task Board',
@@ -19,12 +19,7 @@ const PAGE_TITLES: Record<string, string> = {
 };
 
 const Dashboard: React.FC = () => {
-  const { theme } = useAppContext();
   const [activePage, setActivePage] = useState('dashboard');
-
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-  }, [theme]);
 
   const renderPage = () => {
     switch (activePage) {
@@ -33,10 +28,10 @@ const Dashboard: React.FC = () => {
         return (
           <div className="flex-1 flex flex-col min-h-0">
             <div className="px-6 pt-6 pb-2 shrink-0">
-              <h1 className="text-3xl font-black text-zinc-100 tracking-tight">
+              <h1 className="text-3xl font-black text-white tracking-tight">
                 {PAGE_TITLES[activePage]}
               </h1>
-              <p className="text-zinc-500 text-sm mt-1">Hover a card to move it · Click to open chat</p>
+              <p className="text-white/60 text-sm mt-1">Hover a card to move it · Click to open chat</p>
             </div>
             <TaskBoard />
           </div>
@@ -51,7 +46,7 @@ const Dashboard: React.FC = () => {
         return <div className="flex-1 overflow-y-auto"><SettingsPanel /></div>;
       default:
         return (
-          <div className="flex-1 flex items-center justify-center text-zinc-600">
+          <div className="flex-1 flex items-center justify-center text-white/50">
             <p>Page coming soon…</p>
           </div>
         );
@@ -59,7 +54,7 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className={`flex h-screen overflow-hidden ${theme === 'dark' ? 'bg-zinc-950 text-zinc-100' : 'bg-white text-zinc-900'}`}>
+    <div className="flex h-screen overflow-hidden bg-theme-base text-white">
       <Sidebar activePage={activePage} setActivePage={setActivePage} />
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <Header onBellClick={() => setActivePage('notifications')} />

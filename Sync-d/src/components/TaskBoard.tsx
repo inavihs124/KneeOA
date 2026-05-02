@@ -5,9 +5,9 @@ import { TaskCard } from './TaskCard';
 import { TaskDrawer } from './TaskDrawer';
 
 const columns: { id: TaskStatus; title: string; color: string }[] = [
-  { id: 'todo', title: '📋 To Do', color: 'border-zinc-700' },
-  { id: 'in-progress', title: '⚡ In Progress', color: 'border-amber-500/40' },
-  { id: 'done', title: '✅ Done', color: 'border-emerald-500/40' },
+  { id: 'todo', title: '📋 To Do', color: 'border-theme-muted' },
+  { id: 'in-progress', title: '⚡ In Progress', color: 'border-theme-highlight/40' },
+  { id: 'done', title: '✅ Done', color: 'border-theme-accent/40' },
 ];
 
 export const TaskBoard: React.FC = () => {
@@ -21,14 +21,14 @@ export const TaskBoard: React.FC = () => {
         return (
           <div
             key={col.id}
-            className={`flex-1 min-w-[300px] max-w-[380px] flex flex-col bg-zinc-900/60 rounded-2xl border ${col.color}`}
+            className={`flex-1 min-w-[300px] max-w-[380px] flex flex-col bg-theme-surface/60 rounded-2xl border ${col.color}`}
             role="region"
             aria-label={`${col.title} column`}
           >
             {/* Column header */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-800 shrink-0">
-              <h2 className="font-bold text-sm text-zinc-200">{col.title}</h2>
-              <span className="text-[10px] font-black text-zinc-500 bg-zinc-800 px-2 py-0.5 rounded-full border border-zinc-700">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-theme-muted shrink-0">
+              <h2 className="font-bold text-sm text-white">{col.title}</h2>
+              <span className="text-[10px] font-black text-white/60 bg-theme-surface px-2 py-0.5 rounded-full border border-theme-muted">
                 {colTasks.length}
               </span>
             </div>
@@ -45,7 +45,7 @@ export const TaskBoard: React.FC = () => {
                 </div>
               ))}
               {colTasks.length === 0 && (
-                <div className="text-center text-zinc-700 text-xs py-12 select-none">
+                <div className="text-center text-white/30 text-xs py-12 select-none">
                   No tasks here
                 </div>
               )}

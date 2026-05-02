@@ -28,12 +28,12 @@ export const WinsFeed: React.FC = () => {
   return (
     <div className="p-6 max-w-2xl mx-auto" role="feed" aria-label="Team Wins">
       <div className="flex items-center gap-3 mb-6">
-        <Trophy size={24} className="text-amber-400" />
-        <h2 className="text-2xl font-black text-zinc-100">Team Wins 🏆</h2>
+        <Trophy size={24} className="text-theme-highlight" />
+        <h2 className="text-2xl font-black text-white">Team Wins 🏆</h2>
       </div>
 
       {doneTasks.length === 0 && (
-        <div className="text-center py-20 text-zinc-600">
+        <div className="text-center py-20 text-white/40">
           <Trophy size={48} className="mx-auto mb-3 opacity-30" />
           <p>No wins yet — complete a task to celebrate!</p>
         </div>
@@ -45,24 +45,24 @@ export const WinsFeed: React.FC = () => {
           return (
             <div
               key={task.id}
-              className="bg-gradient-to-r from-violet-900/30 to-cyan-900/20 border border-violet-500/30 rounded-2xl p-5 relative overflow-hidden"
+              className="bg-gradient-to-r from-theme-accent/30 to-theme-highlight/20 border border-theme-accent/30 rounded-2xl p-5 relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 text-5xl opacity-10 select-none" aria-hidden="true">🏆</div>
 
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-sm font-black text-white shrink-0">
+                <div className="w-10 h-10 rounded-full bg-theme-accent flex items-center justify-center text-sm font-black text-white shrink-0">
                   {assignee?.avatar ?? '?'}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs text-zinc-400 mb-1">
-                    <span className="font-bold text-violet-300">{assignee?.name ?? 'Someone'}</span> completed
+                  <p className="text-xs text-white/60 mb-1">
+                    <span className="font-bold text-theme-highlight">{assignee?.name ?? 'Someone'}</span> completed
                   </p>
-                  <h3 className="font-bold text-zinc-100 text-base leading-snug">{task.title}</h3>
+                  <h3 className="font-bold text-white text-base leading-snug">{task.title}</h3>
                   <div className="flex items-center gap-3 mt-2">
-                    <span className="text-xs font-black text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-full">
+                    <span className="text-xs font-black text-theme-highlight bg-theme-highlight/10 border border-theme-highlight/20 px-2 py-0.5 rounded-full">
                       +{task.xpValue} XP earned
                     </span>
-                    <span className="text-xs text-zinc-600">
+                    <span className="text-xs text-white/40">
                       {new Date(task.updatedAt).toLocaleDateString()}
                     </span>
                   </div>
@@ -74,7 +74,7 @@ export const WinsFeed: React.FC = () => {
                 {REACTIONS.map(emoji => (
                   <button
                     key={emoji}
-                    className="text-lg hover:scale-125 transition-transform focus:outline-none focus:ring-2 focus:ring-violet-500 rounded"
+                    className="text-lg hover:scale-125 transition-transform focus:outline-none focus:ring-2 focus:ring-theme-accent rounded"
                     aria-label={`React with ${emoji}`}
                   >
                     {emoji}
